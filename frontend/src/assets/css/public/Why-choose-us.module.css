@@ -1,0 +1,83 @@
+.circle-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+    /* background: #f5f7fa; */
+    overflow: hidden;
+}
+
+/* Main circle */
+.circle {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    border: 1px dashed #dcdcdc;
+}
+
+/* Center text */
+.center-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    max-width: 200px;
+}
+
+.center-content h3 {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.center-content p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Floating items */
+.circle-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 55px;
+    height: 55px;
+    /* ADD THIS: Center the element on its origin */
+    margin-top: -27.5px; /* Half of height */
+    margin-left: -27.5px; /* Half of width */
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform-origin: center;
+    transition: 0.3s ease;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    /* z-index: 2; */
+}
+
+/* Hover effect */
+.circle-item:hover {
+    transform: scale(1.1);
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Active highlighted one */
+.circle-item:first-child {
+    background: linear-gradient(135deg, #2ECC71, #00C9A7);
+    color: white;
+}
+
+.records-row {
+    padding-top: 150px;
+}
+
+@media screen and (max-width: 990px) {
+    .records-row {
+        padding-top: 60px;
+    }
+}

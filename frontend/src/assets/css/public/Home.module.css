@@ -1,0 +1,140 @@
+:root {
+    --primary-color: #2ECC71;
+    --secondary-color: #2C3E50;
+    --accent-color: #00C9A7;
+    --background-color: #080D1B;
+    --link-color: #0053F4;
+}
+
+body {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: 250px !important;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);    
+    margin-top: 10px; 
+}
+
+.dropdown-content::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+}
+
+.dropdown-content::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 9px;
+    border-style: solid;
+    border-color: transparent transparent #dee2e6 transparent;
+    z-index: -1;
+}
+
+.dropdown-content a {
+    padding: 8px 20px;
+    color: grey !important;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: lighter;
+    transition: 0.5s ease-in;
+}
+
+.dropdown-content a:hover {
+    color: white !important;
+    background-color: #2C3E50;
+}
+
+.show-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-toggle {
+    border: unset !important;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.full-width-menu {
+    width: 100vw;
+    left: 0px;
+    top: 60px;
+    margin: 5px 0px 0px 0px !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 0px !important;
+
+    background-image: linear-gradient(to right, var(--accent-color), #6610f2); /* Your two colors */
+    background-size: 100% 3px; /* 100% width, 3px height */
+    background-repeat: no-repeat;
+    background-position: bottom; /* Position the "border" at the bottom */
+}
+
+.sub_mobile_title {
+    color: var(--secondary-color);
+    margin: 0px !important;
+    font-family: sans-serif;
+    padding: 0px 35px;
+}
+
+.sub_mobile_title:nth-child(even) {
+    border-top: 1px solid silver !important;
+    border-bottom: 1px solid silver !important;
+}
+
+.sub_mobile_title a {
+    text-decoration: none !important;
+    font-family: serif;
+    font-size: 15px;
+    padding: 9px 0px;
+    display: block !important;
+    width: 100%;
+}
+
+.sub_mobile_title .activeMobileLink {
+    /* background-color: var(--secondary-color); */
+    color: var(--accent-color) !important;
+}
+
+.sub_mobile_title .notActiveMobileLink {
+    background-color: unset;
+    color: var(--secondary-color);
+}
+
+.sub_mobile_services {
+    padding: 5px 30px;
+    transition: 1s ease-in;
+}
+
+.sub_mobile_services a {
+    color: var(--link-color);
+    padding: 3px 0px;
+    transform: translateX(20px);
+    font-size: 14px;
+}
+
+.featured-img img {
+    height: 700px;
+    object-fit: cover;
+}

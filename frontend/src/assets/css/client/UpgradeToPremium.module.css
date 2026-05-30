@@ -1,0 +1,6 @@
+
+.upgrade-to-premium {
+    background: linear-gradient(240deg, #06161B 80%, #28241A 20%);
+    border-image-source: linear-gradient(240deg, var(--border) 80%, #28241A 20%);
+    border-image-slice: 1
+}

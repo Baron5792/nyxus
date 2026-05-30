@@ -1,0 +1,90 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.left {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.center {
+  align-items: center;
+  text-align: center;
+}
+
+.preTitle {
+  font-size: 28px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #80C181;
+  opacity: 0.8;
+}
+
+.title {
+ font-size: 28px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #80C181;
+  opacity: 0.8;
+}
+
+/* Base accent */
+.accent {
+  margin-top: 6px;
+}
+
+/* Variant 1: simple line */
+.line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, #80C181, transparent);
+  border-radius: 10px;
+}
+
+/* Variant 2: glow */
+.glow {
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, #80C181, #ffffff, #80C181);
+  box-shadow: 0 0 10px rgba(128, 193, 129, 0.7);
+  border-radius: 10px;
+}
+
+/* Variant 3: dot divider */
+.dot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot::before,
+.dot::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: rgba(128, 193, 129, 0.4);
+}
+
+.dot::after {
+  flex: 1;
+}
+
+.dot::before {
+  flex: 1;
+}
+
+.dot::after,
+.dot::before {
+  position: relative;
+}
+
+.dot::after {
+  background: linear-gradient(to right, rgba(128,193,129,0.4), transparent);
+}
+
+.dot::before {
+  background: linear-gradient(to left, rgba(128,193,129,0.4), transparent);
+}
