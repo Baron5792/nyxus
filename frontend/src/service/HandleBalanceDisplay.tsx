@@ -1,5 +1,3 @@
-import { toast } from "sonner"
-
 export const HandleBalanceDisplay = async(value: boolean) => {
     try {
         const response = await fetch (`${import.meta.env.VITE_APP_CONTROLLER}user/balance-display`, {
@@ -17,6 +15,6 @@ export const HandleBalanceDisplay = async(value: boolean) => {
     }
 
     catch (error) {
-        toast.error('Something went wrong', {id: 'something-error'});
+        return ({ success: false, message: 'Something went wrong' });
     }
 }

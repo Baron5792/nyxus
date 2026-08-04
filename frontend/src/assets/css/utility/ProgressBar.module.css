@@ -1,0 +1,19 @@
+.securityStrength {
+  width: 100%;
+}
+
+.progressContainer {
+  width: 100%;
+  height: 12px;
+  background: #edf2f7;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressFill {
+  height: 100%;
+  background: #16a34a;
+  border-radius: 20px;
+  transition: width 0.4s ease;
+} 

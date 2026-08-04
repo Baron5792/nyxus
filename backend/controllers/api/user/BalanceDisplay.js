@@ -20,9 +20,12 @@ router.post('/balance-display', Authentication, async (req, res) => {
         /**
          * update current status
          */
-        const update = await User.updateOne({
-            displayBalance: value
-        })
+        const update = await User.findByIdAndUpdate(
+            id,
+            {
+                displayBalance: value
+            }
+        )
 
         if (!update) {
             return res.status(400).json({ success: false, message: 'Something went wrong' });

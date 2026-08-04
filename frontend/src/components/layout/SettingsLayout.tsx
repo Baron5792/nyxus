@@ -33,7 +33,7 @@ export const SettingsLayout = () => {
                         <div className="nav d-flex flex-row flex-lg-column justify-content-between">
                             { SettingsLinks && (
                                 SettingsLinks.map((prop) => (
-                                    <NavLink to={prop.to} key={prop.id} className={({ isActive }) => `d-flex align-items-center py-2 text-decoration-none  ps-3 pe-3 ${isActive ? `${styles['active']}`: `text-secondary`}`} style={{ fontFamily: 'sans-serif', fontSize: '14px' }}>{prop.icon} <span className="d-none d-lg-inline">{prop.title}</span></NavLink>
+                                    <NavLink to={prop.to} key={prop.id} end className={({ isActive }) => `d-flex align-items-center py-2 text-decoration-none  ps-3 pe-3 ${isActive ? `${styles['active']}`: `text-secondary`}`} style={{ fontFamily: 'sans-serif', fontSize: '14px' }}>{prop.icon} <span className="d-none d-lg-inline">{prop.title}</span></NavLink>
                                 ))
                             ) }
                         </div>

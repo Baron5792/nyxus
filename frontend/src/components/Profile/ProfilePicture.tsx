@@ -9,7 +9,7 @@ import { UpdateAvatarService } from '../../service/Update-Avatar';
 import { useUser } from '../../context/authContext';
 
 export const ProfilePicture = () => {
-    const { refreshUser } = useUser();
+    const { user, refreshUser } = useUser();
     const [modal, setModal] = useState(false);
     const handleModal = () => {
         setModal(true);
@@ -27,26 +27,30 @@ export const ProfilePicture = () => {
     };
 
     const [fileName, setFileName] = useState<string | null>(null);
-    const [file, setFile] = useState<File | string | Blob>('');
+    const [file, setFile] = useState<File | null>(null);
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files && e.target.files[0];
-        if (file) {
+        const targetFile = e.target.files && e.target.files[0];
+        if (!targetFile) {
             // handle file upoad
-            setFile(file);
-            setFileName(file.name);
-        }
-
-        else {
             setFileName(null);
+            return;
         }
+        setFile(targetFile);
+        setFileName(targetFile.name);
     }
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const toasterId = toast.loading('Processing...', {id: 'updating'});
+        const selectedFile = file;
+        if (!selectedFile) {
+            toast.warning('Please select a file', {id: toasterId, description: 'An image is required to proceed'});
+            return;
+        }
+
         const formData = new FormData();
-        formData.append('avatar', file);
+        formData.append('avatar', selectedFile);
 
         if (!fileName) {
             toast.warning('Please select a file to upload', {id: toasterId});
@@ -54,14 +58,17 @@ export const ProfilePicture = () => {
         }
 
         try {
+            console.log('Form: ', formData);
             const request = await UpdateAvatarService(formData);
             if (request.success === false) {
-                toast.error(request.message || 'Something went wrong', {id: toasterId});
+                toast.error(request.message || 'Something went wrong', {id: toasterId, description: 'Your profile picture could not be updated. Please try again later.'});
                 return false;
             }
 
-            toast.success('Successfully updated');
+            toast.success('Successfully updated', { id: toasterId, description: 'Your profile picture has been updated' });
             setModal(false);
+            setFileName(null);
+            setFile(null);
             refreshUser();
         }   
 
@@ -79,7 +86,11 @@ export const ProfilePicture = () => {
                 </div>
 
                 <div className='my-2 position-relative' style={{ width: '140px', height: '140px', margin: 'auto' }}>
-                    <img src={DefaultImg} alt={`${DefaultImg} - ${import.meta.env.VITE_APP_NAME}`} className='rounded-circle w-100' />
+                    {user && user.avatar && user.avatar.length > 0 ? (
+                        <img src={`${import.meta.env.VITE_APP_AVATAR_URL}${user.avatar}`} alt={`${import.meta.env.VITE_APP_NAME} avatar`} className='rounded-circle w-100' style={{ height: '100%' }} />
+                    ) : (
+                        <img src={DefaultImg} alt={`${DefaultImg} - ${import.meta.env.VITE_APP_NAME}`} className='rounded-circle w-100' />
+                    )}
                     <div className='position-absolute' style={{ bottom: '15px', right: '0px' }}>
                         <span className='bg-white p-2 rounded-circle' onClick={handleModal} >
                             <Camera className='text-secondary' />

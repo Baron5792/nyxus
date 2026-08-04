@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import styles from '../../assets/css/public/ClientLayout.module.css'
 import Logo from '../../assets/images/logo/logo-dark.png'
-import { ArrowRightLeft, Bell, TrendingUp, ClipboardList, CreditCard, HelpCircle, LayoutDashboard, MenuIcon, Search, Settings, UserPlus, UserRound, X, Eye, Wallet, SettingsIcon, HeadphonesIcon, LogOutIcon, EyeOff, BadgeCheck, User, Shield, SlidersHorizontal, LogOut } from "lucide-react"
+import { ArrowRightLeft, Bell, TrendingUp, ClipboardList, CreditCard, HelpCircle, LayoutDashboard, MenuIcon, Search, Settings, UserPlus, UserRound, X, Eye, Wallet, EyeOff, BadgeCheck, User, Shield, SlidersHorizontal, LogOut } from "lucide-react"
 import ScrollFadeIn from "../ui/FadeIn"
 import UpgradeToPremium from "../ui/UpgradeToPremium"
 import { AppButton } from "../ui/Button"
@@ -20,6 +20,9 @@ import ContainerCustom from '../../assets/css/client/Container-Design.module.css
 export const ClientLayout = () => {
     const navigate = useNavigate();
     const { user, refreshUser } = useUser();
+    /**
+     * Main NavLinks for mobile and desktop
+     */
     const NavLinks = [
         { id: '1', title: 'Dashboard', to: '/client/dashboard', icon: <LayoutDashboard size={18} strokeWidth={1} /> },
         { id: '2', title: 'Accounts', to: '/client/accounts', icon: <UserRound size={18} strokeWidth={1} /> },
@@ -202,7 +205,11 @@ export const ClientLayout = () => {
                                                         <Dropdown.Toggle variant="normal" className={`${styles['avatar-toggle']} text-white`}>
                                                             <div className="d-flex align-items-center justify-content-between">
                                                                 <div className={styles['avatar-container']}>
-                                                                    <img src={DefaultAvatar} alt={`${import.meta.env.VITE_APP_NAME} avatar`} />
+                                                                    {user && user.avatar && user.avatar.length > 0 ? (
+                                                                        <img src={`${import.meta.env.VITE_APP_AVATAR_URL}${user.avatar}`} alt={`${import.meta.env.VITE_APP_NAME} avatar`} />
+                                                                    ): (
+                                                                        <img src={DefaultAvatar} alt={`${import.meta.env.VITE_APP_NAME} avatar`} />
+                                                                    )}
                                                                 </div>
                                                                 <div className="d-none d-md-none d-lg-block d-xl-block ms-2 text-secondary" style={{ fontFamily: 'sans-serif', fontSize: '13px', width: '130px' }}>
                                                                     <p className="m-0 text-truncate" style={{ textTransform: 'capitalize' }}>{user && user.fullname} <span className="bi bi-chevron-down small"></span></p>
@@ -212,8 +219,12 @@ export const ClientLayout = () => {
                                                         <Dropdown.Menu className={`${styles['profile-content-dropdown']} ${ContainerCustom.container}`}>
                                                             <div className="py-0 px-2">
                                                                 <div className="d-flex align-items-center">
-                                                                    <div style={{ maxWidth: '35px', height: '35px' }} className="m-0">
-                                                                        <img src={DefaultAvatar} alt={`avatar - ${import.meta.env.VITE_APP_NAME}`} className="w-100 rounded-circle" />
+                                                                    <div style={{ width: '35px', height: '35px' }} className="m-0">
+                                                                        {user && user.avatar && user.avatar.length > 0 ? (
+                                                                            <img src={`${import.meta.env.VITE_APP_AVATAR_URL}${user.avatar}`} alt={`avatar - ${import.meta.env.VITE_APP_NAME}`} className="w-100 rounded-circle" style={{ height: '100%' }} />
+                                                                        ): (
+                                                                            <img src={DefaultAvatar} alt={`avatar - ${import.meta.env.VITE_APP_NAME}`} className="w-100 rounded-circle" />
+                                                                        )}
                                                                     </div>
                                                                     <div style={{ overflow: 'hidden', fontFamily: 'sans-serif' }} className="ms-2 mt-0">
                                                                         <p style={{ fontSize: '13px', fontWeight: 'bold' }} className="mb-0">{user && user.fullname}</p>
@@ -276,7 +287,11 @@ export const ClientLayout = () => {
                     {/* AVATAR, NAME AND SUBSCRIPTION */}
                     <div className="d-flex align-items-center">
                         <div className={styles['avatar-container']}>
-                            <img style={{ border: '2px solid var(--primary-color)' }} src={DefaultAvatar} alt={`${import.meta.env.VITE_APP_NAME} avatar`} />
+                            {user && user.avatar && user.avatar.length > 0 ? (
+                                <img style={{ border: '2px solid var(--primary-color)' }} src={`${import.meta.env.VITE_APP_AVATAR_URL}${user.avatar}`} alt={`${import.meta.env.VITE_APP_NAME} avatar`} />
+                            ): (
+                                <img style={{ border: '2px solid var(--primary-color)' }} src={DefaultAvatar} alt={`${import.meta.env.VITE_APP_NAME} avatar`} />
+                            )}
                         </div>
                         <div className="d-flex flex-column justify-content-center ms-2">
                             <p className="m-0 text-dark" style={{ fontFamily: 'sans-serif', fontSize: '13px', textTransform: 'capitalize' }}>{ user && user.fullname }</p>
@@ -312,7 +327,12 @@ export const ClientLayout = () => {
                     <div className={`d-flex flex-column mt-2 ${styles['mobile-nav-links']}`} style={{ borderTop: '1px solid var(--container-border)', borderBottom: '1px solid var(--container-border)' }}>
                         {NavLinks && (
                             NavLinks.map((link) => (
-                                <NavLink to={link.to} key={link.id} className={({ isActive }) => `d-block text-decoration-none rounded mt-3 p-2 ${isActive ? `${styles['active-link']}`: `${styles['inactive-link']}`}`}>
+                                <NavLink 
+                                    to={link.to} 
+                                    key={link.id} 
+                                    className={({ isActive }) => `d-block text-decoration-none rounded mt-3 p-2 ${isActive ? `${styles['active-link']}`: `${styles['inactive-link']}`}`}
+                                    onClick={() => setMobileMenu(false)}
+                                >
                                     {link.icon}
                                     <span className="ms-2">{link.title}</span>
                                 </NavLink>

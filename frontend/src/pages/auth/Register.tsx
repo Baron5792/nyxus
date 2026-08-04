@@ -79,8 +79,8 @@ export const Register = () => {
             navigate('/auth/login');
         }
 
-        catch (error) {
-            toast.error('Something went wrong', {id: toasterId});
+        catch (error: any) {
+            toast.error(error.message || 'Something went wrong', {id: toasterId});
         }
     }
 

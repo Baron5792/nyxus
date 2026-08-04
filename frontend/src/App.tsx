@@ -9,6 +9,7 @@ import { ClientLayout } from './components/layout/ClientLayout'
 import { Dashboard } from './pages/client/Dashboard'
 import { SettingsLayout } from './components/layout/SettingsLayout'
 import { Profile } from './pages/client/Settings/Profile'
+import { Security } from './pages/client/Settings/Security'
 
 export const App = () => {
     return (
@@ -32,6 +33,7 @@ export const App = () => {
                     {/* Route for settings */}
                     <Route element={<SettingsLayout />} path='settings'>
                         <Route index element={<Profile />} />
+                        <Route element={<Security />} path='security' />
                     </Route>
                 </Route>
             </Routes>

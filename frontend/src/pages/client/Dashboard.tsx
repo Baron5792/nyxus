@@ -18,7 +18,7 @@ export const Dashboard = () => {
     const { setPageTitle } = useOutletContext<DashboardOutletProps>();
     useEffect(() => {
         setPageTitle('Dashboard');
-        document.title = `Dashboard | ${import.meta.env.VITE_APP_NAME}`;
+        document.title = `Dashboard - ${import.meta.env.VITE_APP_NAME}`;
     }, [setPageTitle]);
 
     const myData = [

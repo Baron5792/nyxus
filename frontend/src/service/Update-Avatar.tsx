@@ -4,10 +4,7 @@ export const UpdateAvatarService = async(formData: FormData) => {
             method: 'POST',
             credentials: 'include',
             body: formData,
-            // headers: {
-            //     'Content-Type': 'application/json'
-            // }
-        });
+        }); 
         
         return await response.json();
     }

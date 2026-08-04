@@ -37,6 +37,7 @@ connection();
 /**
  * Define routes here
  */
+app.use('/uploads', express.static('uploads')); // for images and other static files
 app.use('/auth', authRoutes);
 app.use('/context', authContext);
 app.use('/auth', CheckAuth);
