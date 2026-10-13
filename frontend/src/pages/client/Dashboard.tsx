@@ -9,6 +9,7 @@ import { RecentTransactions } from "../../components/dashboard/Recent-Transactio
 import IntroImg from '../../assets/images/dashboard/intro.png'
 import TradingWidget from "../public/home/Trading-Widget";
 import { useUser } from "../../context/authContext";
+import { Referral } from "../../components/dashboard/Referral";
 
 interface DashboardOutletProps {
     setPageTitle: (title: string) => void;
@@ -36,7 +37,7 @@ export const Dashboard = () => {
                 <div className="col-12 col-md-12 col-lg-6 col-xl-6">
                     <div className="row">
                         {/* balance overview */}
-                        <div className="col-12 col-md-12 col-lg-12 col-xl-12">
+                        <div className="col-12 col-md-6 col-lg-12 col-xl-12">
                             <BalanceOverview />
                         </div>
                         
@@ -46,7 +47,7 @@ export const Dashboard = () => {
                             <QuickActions />
                         </div>
 
-                        <div className="col-12 col-md-12 col-lg-12 col-xl-12 d-block d-md-block d-lg-none d-xl-none">
+                        <div className="col-12 col-md-6 col-lg-12 col-xl-12 d-block d-md-block d-lg-none d-xl-none">
                             <VirtualCard 
                                 cardHolderName={user && user.fullname} 
                                 cardNumber={user && user.cardNumber}
@@ -57,17 +58,25 @@ export const Dashboard = () => {
                         </div>
                         
                         {/* Quick Actions for mobile */}
-                        <div className="col-12 col-md-12 col-lg-12 col-xl-12 d-block d-md-block d-lg-none d-xl-none">
+                        <div className="col-12 col-md-6 col-lg-12 col-xl-12 d-block d-md-block d-lg-none d-xl-none">
                             <QuickActions />
                         </div>
 
+                        <div className="col-12 col-md-6 col-lg-12">
+                            <Referral />
+                        </div>
+
+
                         {/* Investment Performance */}
-                        <div className="col-12 col-md-12 col-lg-12 col-xl-12">
+                        <div className="col-12 col-md-6 col-lg-12 col-xl-12">
                             <InvestmentGraph transactions={myData} />
                         </div>
 
                         {/* Trading Widget */}
-                        <TradingWidget />
+                        <div className="col-12 col-md-6 col-lg-12">
+                            <TradingWidget />
+                        </div>
+
                     </div>
                 </div>
 
@@ -76,7 +85,7 @@ export const Dashboard = () => {
                 <div className="col-12 col-md-12 col-xl-6 col-lg-6">
                     <div className="row">
                         {/* virtual card display */}
-                        <div className="col-12 col-md-12 col-lg-10 col-xl-10 d-none d-md-none d-lg-block d-xl-block">
+                        <div className="col-12 col-md-6 col-lg-10 col-xl-10 d-none d-md-none d-lg-block d-xl-block">
                             <VirtualCard 
                                 cardHolderName={user && user.fullname} 
                                 cardNumber={user && user.cardNumber}
@@ -87,17 +96,17 @@ export const Dashboard = () => {
                         </div>
 
                         {/* Total Enquiries */}
-                        <div className="col-12 col-md-12 col-lg-12 col-xl-12">
+                        <div className="col-12 col-md-6 col-lg-12 col-xl-12">
                             <RecentInvestedAndReturns />
                         </div>
 
                         {/* Recent Transactions */}
-                        <div className="col-12 col-md-12 col-lg-12 col-xl-">
+                        <div className="col-12 col-md-6 col-lg-12 col-xl-">
                             <RecentTransactions />
                         </div>
 
                         {/* Image ending dashboard */}
-                        <div className="col-12 col-md-12 col-lg-12 col-xl-12">
+                        <div className="col-12 col-md-6 col-lg-12 col-xl-12">
                             <img src={IntroImg} alt={`Invest on - ${import.meta.env.VITE_APP_NAME}`} className="w-100" />
                         </div>
                     </div>

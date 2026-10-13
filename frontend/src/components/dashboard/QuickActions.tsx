@@ -2,17 +2,20 @@ import { CircleArrowDown, SendHorizonal, TrendingUp, CircleArrowUp } from 'lucid
 import container from '../../assets/css/client/Container-Design.module.css';
 import { NavLink } from 'react-router-dom';
 import ScrollFadeIn from '../ui/FadeIn';
+import { useTheme } from '../../context/ThemeContext';
 
 export const QuickActions = () => {
+    const { theme } = useTheme();
+
     const ActionIcons = [
-        { id: '1', title: 'Deposit', icon: <CircleArrowDown size={15} />, to: '/client/deposit', iconColor: '#0D884B', background: '#F3FBF6' },
-        { id: '2', title: 'Withdraw', icon: <CircleArrowUp size={15} />, to: '/client/withdraw', iconColor: '#5326A9', background: '#FAF8FB' },
-        { id: '3', title: 'Invest', icon: <TrendingUp size={15} />, to: '/client/investment', iconColor: '#2763AD', background: '#F4F7FA' },
-        { id: '4', title: 'Transfer', icon: <SendHorizonal size={15} />, to: '/client/transfer', iconColor: '#995C0E', background: '#FEFAF6' }
-    ]
+        { id: '1', title: 'Deposit', icon: <CircleArrowDown size={15} />, to: '/client/deposit', iconColor: '#0D884B', background: theme === 'dark' ? '#AEB7C4' : '#F3FBF6' },
+        { id: '2', title: 'Withdraw', icon: <CircleArrowUp size={15} />, to: '/client/withdraw', iconColor: '#5326A9', background: theme === 'dark' ? '#AEB7C4' : '#FAF8FB' },
+        { id: '3', title: 'Invest', icon: <TrendingUp size={15} />, to: '/client/investment', iconColor: '#2763AD', background: theme === 'dark' ? '#AEB7C4' : '#F4F7FA' },
+        { id: '4', title: 'Transfer', icon: <SendHorizonal size={15} />, to: '/client/transfer', iconColor: '#995C0E', background: theme === 'dark' ? '#AEB7C4' : '#FEFAF6' }
+    ];
     return (
         <>
-            <div className={container.container}>
+            <div className={theme === 'dark' ?container['dark-container'] : container.container}>
                 <div>
                     <p style={{ fontSize: '14px', fontFamily: 'Arial, sans-serif' }} className="text-dark">Quick Actions</p>
                 </div>

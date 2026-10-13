@@ -1,12 +1,14 @@
 import { CalendarDays, Fingerprint, Lock, ShieldCheck, UserCheck } from 'lucide-react'
 import containerCss from '../../assets/css/client/Container-Design.module.css'
 import { useUser } from '../../context/authContext';
+import { useTheme } from '../../context/ThemeContext';
 
 export const AccountOverview = () => {
     const { user } = useUser();
+    const { theme } = useTheme();
     return (
         <>
-            <div className={containerCss['container']}>
+            <section className={theme === 'dark' ? containerCss['dark-container'] : containerCss['container']}>
                 {/* title */}
                 <div style={{ fontFamily: 'sans-serif', fontSize: '14px' }} className='fw-bold'>
                     <p>Account Overview</p>
@@ -38,7 +40,7 @@ export const AccountOverview = () => {
                         </span>
                         <div style={{ fontFamily: 'sans-serif', fontSize: '14px' }} className='ms-2'>
                             <span className='mb-0'>KYC status</span>
-                            <span className={`ms-2 p-1 small ${user && user.kycStatus === 'verified' ? 'bg-success': 'bd-danger'} text-white rounded`}>{user && user.status}</span>
+                            <span className={`ms-2 p-1 small ${user && user.kycStatus === 'verified' ? 'bg-success': 'bg-danger'} text-white rounded`}>{user && user.kycStatus}</span>
                         </div>
                     </div>
 
@@ -62,7 +64,7 @@ export const AccountOverview = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </>
     )
 }

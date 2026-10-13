@@ -1,32 +1,15 @@
-.modal {
-    /* padding: 10px 15px !important; */
-    position: fixed;
-    background-color: white;
-    border: 1px solid #eef0f3;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-    z-index: 1200;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding: 20px;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
-    transform: translateY(0);
-    transition: transform 1s ease-in-out;
-    max-height: 70%;
-    overflow-y: auto;
+.light-modal {
+    background-color: transparent;
+    border-radius: 0% !important;
+    --bs-modal-border-radius: 0;
+    --bs-modal-inner-border-radius: 0;
+    border-radius: 0 !important;
+    border: unset !important;
+    --bs-border: 0;
 }
 
-@media screen and (min-width: 768px) {
-    .modal {
-        bottom: auto;
-        top: 50% !important;
-        left: 50%;
-        transform: translate(-50%, -50%);
+@media screen and (max-width: 768px) {
+    .light-modal {
+        min-height: 100vh !important;
     }
 }
-
-/* .modal_container {
-    height: 100%;
-    overflow-y: scroll;
-} */

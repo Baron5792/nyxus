@@ -7,6 +7,15 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
+.dark-container {
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: var(--dark-background);
+    margin-bottom: 30px;
+    border: 1px solid #363C47;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
 .no_margin {
     padding: 10px 15px;
     border-radius: 5px;
@@ -14,4 +23,25 @@
     /* margin-bottom: 30px; */
     border: 1px solid #eef0f3;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    margin-bottom: 10px;
+}
+
+.dark-no_margin {
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: var(--dark-background);
+    /* margin-bottom: 30px; */
+    border: 1px solid #363C47;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    margin-bottom: 10px;
+}
+
+.gradient-border {
+    background-image: linear-gradient(to right, var(--primary-color), var(--border));
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.container-pointer {
+    cursor: pointer;
 }

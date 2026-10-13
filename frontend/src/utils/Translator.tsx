@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import styles from '../assets/css/Translator.module.css';
+import { useTheme } from '../context/ThemeContext';
 
 // Declare Google Translate types
 declare global {
@@ -43,11 +44,16 @@ const languages: Language[] = [
   { code: 'hi', name: 'Hindi', flag: 'in' },
 ];
 
-const GoogleTranslateCustom: React.FC = () => {
+interface GoogleTranslateCustomProps {
+  textColor?: boolean;
+}
+
+const GoogleTranslateCustom: React.FC<GoogleTranslateCustomProps> = ({ textColor }: { textColor?: boolean }) => {
   const [isGoogleReady, setIsGoogleReady] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [currentLang, setCurrentLang] = useState<Language>(languages[0]);
+  const { theme } = useTheme();
 
   const scriptLoadedRef = useRef<boolean>(false);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -205,7 +211,7 @@ const GoogleTranslateCustom: React.FC = () => {
       {/* Custom Flag Dropdown */}
       <div ref={dropdownRef} className={styles.customDropdown}>
         <button
-          className={styles.dropdownButton}
+          className={`${styles.dropdownButton} ${textColor ? 'text-secondary' : ''}`}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           disabled={!isGoogleReady || !!error}
           type="button"
@@ -218,7 +224,7 @@ const GoogleTranslateCustom: React.FC = () => {
         </button>
 
         {isDropdownOpen && (
-          <ul className={styles.dropdownList}>
+          <ul className={theme === 'dark' ? styles['dark-dropdownList'] : styles.dropdownList}>
             {displayLanguages.map((lang) => (
               <li
                 key={lang.code}

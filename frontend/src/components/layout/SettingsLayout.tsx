@@ -2,6 +2,7 @@ import { Bell, Shield, SlidersHorizontal, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useOutletContext } from "react-router-dom"
 import styles from '../../assets/css/client/SettingsLayout.module.css';
+import { useTheme } from "../../context/ThemeContext";
 
 interface SettingsTitleProps {
     setPageTitle: (title: string) => void;
@@ -23,7 +24,9 @@ export const SettingsLayout = () => {
         { id: '2', title: 'Security', icon: <Shield strokeWidth={2} size={20} />, to: '/client/settings/security' },
         { id: '3', title: 'Preference', icon: <SlidersHorizontal strokeWidth={2} size={20} />, to: '/client/settings/preference' },
         { id: '4', title: 'Notification', icon: <Bell strokeWidth={2} size={20} />, to: '/client/settings/notifications' }
-    ]
+    ];
+
+    const { theme } = useTheme();
 
     return (
         <>
@@ -33,7 +36,7 @@ export const SettingsLayout = () => {
                         <div className="nav d-flex flex-row flex-lg-column justify-content-between">
                             { SettingsLinks && (
                                 SettingsLinks.map((prop) => (
-                                    <NavLink to={prop.to} key={prop.id} end className={({ isActive }) => `d-flex align-items-center py-2 text-decoration-none  ps-3 pe-3 ${isActive ? `${styles['active']}`: `text-secondary`}`} style={{ fontFamily: 'sans-serif', fontSize: '14px' }}>{prop.icon} <span className="d-none d-lg-inline">{prop.title}</span></NavLink>
+                                    <NavLink to={prop.to} key={prop.id} end className={({ isActive }) => `d-flex align-items-center py-2 text-decoration-none ps-3 pe-3 ${isActive ? `${theme === 'dark' ? styles['dark-active'] : styles['active']}`: `text-secondary`}`} style={{ fontFamily: 'sans-serif', fontSize: '14px' }}>{prop.icon} <span className="d-none d-lg-inline">{prop.title}</span></NavLink>
                                 ))
                             ) }
                         </div>

@@ -4,6 +4,8 @@ import { useUser } from '../../context/authContext';
 import { FormatBalance } from '../../utils/Balance';
 import { HandleBalanceDisplay } from '../../service/HandleBalanceDisplay';
 import { toast } from 'sonner';
+import { useTheme } from '../../context/ThemeContext';
+import { CurrencyFormat } from '../ui/CurrencyFormat';
 
 export const BalanceOverview = () => {
     const { user, refreshUser } = useUser();
@@ -22,9 +24,11 @@ export const BalanceOverview = () => {
             toast.error('Something went wrong', {id: 'something-error'});
         }
     }
+
+    const { theme } = useTheme();
     return (
         <>
-            <div className={styles['container']}>
+            <div className={theme === 'dark' ? styles['dark-container'] : styles['container']}>
                 <div className="d-flex align-items-center justify-content-between">
                     <div>
                         <div className="d-flex align-items-center" style={{ color: 'black' }}>
@@ -36,7 +40,7 @@ export const BalanceOverview = () => {
                             )}
                         </div>
                         <div>
-                            <p className="text-dark fs-2 my-1" style={{ fontFamily: 'sans-serif' }}>${ FormatBalance(user && user.balance, user && user.displayBalance) }</p>
+                            <p className="text-dark fs-2 my-1" style={{ fontFamily: 'sans-serif' }}>{<CurrencyFormat amount={user?.balance} hidden={!user?.displayBalance} />}</p>
                         </div>
                         <div>
                             <p className="text-secondary mt-0" style={{ fontFamily: 'sans-serif', fontSize: '13px' }}><span style={{ color: 'var(--primary-color)' }}><i className="bi bi-caret-up-fill me-1"></i>2.4%</span> from last month</p>

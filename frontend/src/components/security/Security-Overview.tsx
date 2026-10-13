@@ -1,11 +1,13 @@
 import { ShieldCheck } from 'lucide-react'
 import ContainerCss from '../../assets/css/client/Container-Design.module.css'
 import { ProgressBar } from '../../utils/Progress-Bar'
+import { useTheme } from '../../context/ThemeContext'
 
 export const SecurityOverview = () => {
+    const { theme } = useTheme();
     return (
         <>
-            <div className={`${ContainerCss.container}`}>
+            <div className={`${theme === 'dark' ? ContainerCss['dark-container'] : ContainerCss.container}`}>
                 <div className="container-fluid p-0">
                     <div className="row">
                         <div className="col-12 col-md-12 col-lg-8 col-xl-9">

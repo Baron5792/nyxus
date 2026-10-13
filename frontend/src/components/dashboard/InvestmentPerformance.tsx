@@ -1,18 +1,21 @@
 import React, { useMemo } from 'react';
-import styles from '../../assets/css/client/Container-Design.module.css'
+import styles from '../../assets/css/client/Container-Design.module.css';
+
 import {
-    AreaChart,
-    Area,
+    BarChart,
+    Bar,
     XAxis,
     YAxis,
     CartesianGrid,
     Tooltip,
-    ResponsiveContainer
+    ResponsiveContainer,
 } from 'recharts';
 
+import { useTheme } from '../../context/ThemeContext';
+
 interface Transaction {
-    timestamp: any; // ISO format or "YYYY-MM-DD"
-    type: any;
+    timestamp: string;
+    type: 'DEPOSIT' | 'WITHDRAWAL' | 'PROFIT' | 'TRANSFER';
     amount: number;
 }
 
@@ -21,70 +24,149 @@ interface GraphProps {
 }
 
 const InvestmentGraph: React.FC<GraphProps> = ({ transactions }) => {
-    // Process raw transactions into a cumulative timeline for the graph
+    const { theme } = useTheme();
+
     const chartData = useMemo(() => {
-        let cumulativeBalance = 0;
-        return transactions
-            .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
-            .map((item) => {
-                if (item.type === 'WITHDRAWAL') {
-                cumulativeBalance -= item.amount;
-                } else {
-                cumulativeBalance += item.amount;
+        return transactions.map((transaction) => ({
+            date: new Date(transaction.timestamp).toLocaleDateString(
+                'en-US',
+                {
+                    month: 'short',
+                    day: 'numeric',
                 }
-                return {
-                date: new Date(item.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-                value: cumulativeBalance,
-                };
-            });
+            ),
+
+            deposit:
+                transaction.type === 'DEPOSIT'
+                    ? transaction.amount
+                    : 0,
+
+            withdrawal:
+                transaction.type === 'WITHDRAWAL'
+                    ? transaction.amount
+                    : 0,
+
+            profit:
+                transaction.type === 'PROFIT'
+                    ? transaction.amount
+                    : 0,
+
+            transfer:
+                transaction.type === 'TRANSFER'
+                    ? transaction.amount
+                    : 0,
+        }));
     }, [transactions]);
 
+    const isDark = theme === 'dark';
+
     return (
-        <div className={styles.container} style={{ height: '300px' }}>
-            <p style={{ color: 'black', marginBottom: '20px', fontFamily: 'sans-serif', fontSize: '14px' }}>Investment Performance</p>
-        
-            <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData} margin={{ top: 10, right:30, left: 0, bottom: 40 }}>
-                    <defs>
-                        {/* Creates the glowing green gradient from your image */}
-                        <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#00ffa3" stopOpacity={0.1}/>
-                            <stop offset="80%" stopColor="#00ffa3" stopOpacity={0}/>
-                        </linearGradient>
-                    </defs>
-                
-                    <XAxis 
-                        dataKey="date" 
-                        axisLine={false} 
-                        tickLine={false} 
-                        tick={{ fill: '#666', fontSize: 12 }} 
-                        dy={10}
-                    />
-                
-                    <YAxis 
-                        axisLine={false} 
-                        tickLine={false} 
-                        tick={{ fill: '#666', fontSize: 12 }}
-                        tickFormatter={(value) => `$${value / 1000}K`}
+        <div
+            className={
+                isDark
+                    ? styles['dark-container']
+                    : styles.container
+            }
+            style={{
+                height: '300px',
+                width: '100%',
+            }}
+        >
+            <p
+                style={{
+                    color: isDark ? '#fff' : '#000',
+                    marginBottom: '20px',
+                    fontFamily: 'sans-serif',
+                    fontSize: '14px',
+                }}
+            >
+                Investment Performance
+            </p>
+
+            <ResponsiveContainer
+                width="100%"
+                height="85%"
+            >
+                <BarChart
+                    data={chartData}
+                    margin={{
+                        top: 10,
+                        right: 30,
+                        left: 0,
+                        bottom: 20,
+                    }}
+                >
+                    <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        stroke={isDark ? '#2a2d33' : '#e5e5e5'}
                     />
 
-                    <Tooltip 
-                        contentStyle={{ backgroundColor: '#1a1d23', border: 'none', borderRadius: '8px', color: '#fff' }}
-                        itemStyle={{ color: '#00ffa3' }}
-                        formatter={(value: any) => [`$${value.toLocaleString()}`, 'Balance']}
+                    <XAxis
+                        dataKey="date"
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{
+                            fill: isDark ? '#aaa' : '#666',
+                            fontSize: 12,
+                        }}
                     />
 
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1f2229" />
-
-                    <Area
-                        type="monotone" // This creates the smooth wave
-                        dataKey="value"
-                        stroke="#00ffa3"
-                        strokeWidth={3}
-                        fillOpacity={1}
-                        fill="url(#colorValue)"
+                    <YAxis
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{
+                            fill: isDark ? '#aaa' : '#666',
+                            fontSize: 12,
+                        }}
+                        tickFormatter={(value) =>
+                            `$${value / 1000}K`
+                        }
                     />
-                </AreaChart>
+
+                    <Tooltip
+                        contentStyle={{
+                            backgroundColor: isDark
+                                ? '#1a1d23'
+                                : '#fff',
+                            border: 'none',
+                            borderRadius: '8px',
+                            color: isDark ? '#fff' : '#000',
+                        }}
+                        formatter={(value: any, name: string) => [
+                            `$${Number(value).toLocaleString()}`,
+                            name,
+                        ]}
+                    />
+
+                    <Bar
+                        dataKey="deposit"
+                        name="Deposit"
+                        fill="#0E695C"
+                        radius={[4, 4, 0, 0]}
+                    />
+
+                    <Bar
+                        dataKey="withdrawal"
+                        name="Withdrawal"
+                        fill="#e74c3c"
+                        radius={[4, 4, 0, 0]}
+                    />
+
+                    <Bar
+                        dataKey="profit"
+                        name="Profit Earned"
+                        fill="#27ae60"
+                        radius={[4, 4, 0, 0]}
+                    />
+
+                    <Bar
+                        dataKey="transfer"
+                        name="Amount Transferred"
+                        fill="#3498db"
+                        radius={[4, 4, 0, 0]}
+                    />
+                </BarChart>
             </ResponsiveContainer>
         </div>
     );

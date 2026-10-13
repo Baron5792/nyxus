@@ -61,8 +61,9 @@ const registerController = async(req, res) => {
         const appCVCNumber = generateCVC();
 
         const expiryYear = new Date().getFullYear() + 1;
+        const betterYearFormat = expiryYear.slice(0, 2);
         const expiryMonth = new Date().getMonth();
-        const expiryDate = `${expiryMonth}/${expiryYear}`;
+        const expiryDate = `${expiryMonth}/${betterYearFormat}`;
 
         const newReferralCode = () => {
             return Math.floor(100 + Math.random() * 900);

@@ -1,8 +1,9 @@
 import { useState, useEffect, createContext, useContext, type ReactNode } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface UserContextProp {
     user: any;
+    loading: boolean;
     refreshUser: () => Promise<void>
 }
 
@@ -18,7 +19,8 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }: {children: ReactNode}) => {
     const [user, setUser] = useState(null);
-    // const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
     const fetchUser = async() => {
         try {
             const response = await fetch(`${import.meta.env.VITE_APP_CONTROLLER}context/middleware`, {
@@ -41,6 +43,10 @@ export const UserProvider = ({ children }: {children: ReactNode}) => {
         catch (error) {
             setUser(null);
         }
+
+        finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -49,7 +55,8 @@ export const UserProvider = ({ children }: {children: ReactNode}) => {
 
     const value = {
         user,
-        refreshUser: fetchUser
+        refreshUser: fetchUser,
+        loading,
     }
 
     return (

@@ -18,7 +18,7 @@ export const SecurityLayout = ({ icon, title, description }: any) => {
 
                     {/* info, status */}
                     <div className="d-flex align-items-center">
-                        
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora a autem aliquam repellat odit dolorem suscipit maxime voluptate vel, amet nobis molestiae ullam facere beatae in sed quasi quae pariatur.</p>
                     </div>
                 </div>
             </div>

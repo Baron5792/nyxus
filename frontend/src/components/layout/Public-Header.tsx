@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import { GripVertical } from 'lucide-react';
 import { Dropdown } from 'react-bootstrap';
 import styles from '../../assets/css/public/Home.module.css';
+import { useUser } from '../../context/authContext';
 
 export const PublicHeader = () => {
     const DesktopLinStyling : React.CSSProperties = {
@@ -13,6 +14,8 @@ export const PublicHeader = () => {
         color: '#ffffff',
         fontSize: '14px'
     }
+
+    const { user } = useUser();
 
     const HeaderLinks = [
         { id: 'home', title: 'Home', path: '/', effect: false },
@@ -110,19 +113,27 @@ export const PublicHeader = () => {
                                 )) }
 
                                 {/* create account and go to your account route */}
-                                <LinkButtons 
-                                    to='/auth/register'
-                                    title='Create New Account'
-                                    classname='btn btn-success rounded-0'
-                                    style={{ fontFamily: 'sans-serif', fontSize: '14px' }}
-                                />
+                                {user ? (
+                                    <>
+                                        <LinkButtons to='/client/dashboard' title='Go to Dashboard' classname='btn btn-success rounded-0' style={{ fontFamily: 'sans-serif', fontSize: '14px' }} />
+                                    </>
+                                ): (
+                                    <>
+                                        <LinkButtons 
+                                            to='/auth/register'
+                                            title='Create New Account'
+                                            classname='btn btn-success rounded-0'
+                                            style={{ fontFamily: 'sans-serif', fontSize: '14px' }}
+                                        />
 
-                                <LinkButtons 
-                                    to='/auth/login'
-                                    title='Go to your account'
-                                    classname={`btn btn-${scrolled ? 'outline-dark text-dark' : 'light'} border rounded-0 border-dark`}
-                                    style={{ fontFamily: 'sans-serif', color: '#000', fontSize: '14px' }}
-                                />
+                                        <LinkButtons 
+                                            to='/auth/login'
+                                            title='Go to your account'
+                                            classname={`btn btn-${scrolled ? 'outline-dark text-dark' : 'light'} border rounded-0 border-dark`}
+                                            style={{ fontFamily: 'sans-serif', color: '#000', fontSize: '14px' }}
+                                        />
+                                    </>
+                                )}
                             </div>
                         </div>
 

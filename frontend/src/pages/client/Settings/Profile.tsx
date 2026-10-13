@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { ProfilePicture } from "../../../components/Profile/ProfilePicture";
 import { AccountOverview } from "../../../components/Profile/AccountOverview";
 import { PersonalInformation } from "../../../components/Profile/Personal-Information";
+import { motion } from "motion/react";
 
 interface SettingsTitleProps {
     setSubPageTitle: (title: string) => void;
@@ -18,17 +19,19 @@ export const Profile = () => {
         <>
             <div className="container-fluid p-0">
                 <div className="row">
-                    <div className="col-12 col-md-12 col-lg-6 col-xl-6">
+                    <section className="col-12 col-md-12 col-lg-6 col-xl-6">
                         <ProfilePicture />
-                    </div>
+                    </section>
 
-                    <div className="col-12 col-md-12 col-lg-6 col-xl-6">
+                    <section className="col-12 col-md-12 col-lg-6 col-xl-6">
                         <AccountOverview />
-                    </div>
+                    </section>
 
-                    <div className="col-12 col-md-12 col-lg-12 col-xl-12">
-                        <PersonalInformation />
-                    </div>
+                    <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+                        <section className="col-12 col-md-12 col-lg-12 col-xl-12">
+                            <PersonalInformation />
+                        </section>
+                    </motion.div>
                 </div>
             </div>
         </>

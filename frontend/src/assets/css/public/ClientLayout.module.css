@@ -9,22 +9,27 @@
 
 :root {
     --primary-color: #0E695C;
-    --dark-background: #fff;
+    --dark-background: #2B303A;;
     --light-background: #FFFFFF;
     --grey-text: #9298A4;
     --border: #1FEFD6;
     --container-border: #FFFFFF;
 }
 
+.client-layout {
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+}
 
 .desktop-nav-links-container {
     padding: 30px 0px 0px 0px;
 }
 
 .active-link {
-    background-color: var(--primary-color);
+    background-color: #0E695C !important;
     color: white;
-    border-left: 4px solid var(--border);
+    border-left: 4px solid var(--border) !important;
 }
 
 .inactive-link {
@@ -57,8 +62,8 @@
 }
 
 .avatar-container {
-    height: 35px;
-    width: 35px;
+    height: 30px;
+    width: 30px;
 }
 
 .avatar-container img {
@@ -95,7 +100,7 @@
 }
 
 .mobile-nav-links {
-    height: 350px !important;
+    height: 200px !important;
     overflow-y: scroll;
 }
 

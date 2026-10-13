@@ -14,6 +14,8 @@ import CheckAuth from './controllers/api/auth-check.js';
 import BalanceStatus from './controllers/api/user/BalanceDisplay.js'
 import profileRoute from './routes/profileRoute.js';
 import AvatarUpdate from './controllers/api/profile/avatar-update.js'
+import UpdateRoute from './routes/updateRoute.js';
+import fetchRoute from './routes/fetchRoutes.js';
 
 const app = express();
 app.use(express.json());
@@ -37,13 +39,15 @@ connection();
 /**
  * Define routes here
  */
-app.use('/uploads', express.static('uploads')); // for images and other static files
-app.use('/auth', authRoutes);
-app.use('/context', authContext);
-app.use('/auth', CheckAuth);
-app.use('/user', BalanceStatus);
-app.use('/user', profileRoute);
-app.use('/api', AvatarUpdate);
+app.use('/v1/uploads', express.static('uploads')); // for images and other static files
+app.use('/v1/auth', authRoutes);
+app.use('/v1/context', authContext);
+app.use('/v1/auth', CheckAuth);
+app.use('/v1/user', BalanceStatus);
+app.use('/v1/user', profileRoute);
+app.use('/v1/api', AvatarUpdate);
+app.use('/v1/client/update', UpdateRoute);
+app.use('/v1/client/fetch', fetchRoute);
 
 
 

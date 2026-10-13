@@ -8,7 +8,6 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, 'Email is required'],
         unique: true,
         trim: true,
         lowercase: true,
@@ -16,7 +15,6 @@ const UserSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
         trim: true
     },
     username: {
@@ -32,7 +30,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         trim: true,
         default: null,
-        required: true
     },
     dob: {
         type: String,
@@ -129,8 +126,20 @@ const UserSchema = new mongoose.Schema({
         enum: ['VISA', 'MASTERCARD'],
         default: 'VISA'
     },
+    googleId: {
+        type: String,
+    },
     expiryDate: {
         type: String,
+    },
+    email_verification: {
+        type: Number,
+        default: 0,
+    },
+    Currency: {
+        type: String,
+        enum: ['USD', 'EUR', 'GBP', 'JPY'],
+        default: 'USD',
     }
 }, { timestamps: true })
 

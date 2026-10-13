@@ -8,6 +8,7 @@ import { AppButton } from '../ui/Button';
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { toast } from 'sonner';
 import { ProfileUpdateService } from '../../service/HandleProfileFormSubmission';
+import { useTheme } from '../../context/ThemeContext';
 
 export const PersonalInformation = () => {
     const { user, refreshUser } = useUser();
@@ -79,6 +80,10 @@ export const PersonalInformation = () => {
         /**
          * fix issue of not raeding some input values
          */
+        if (isNaN(formData.phone)) {
+            toast.error("Inavlid phone number!", {id: toasterId});
+            return;
+        }
 
         try {
             const request = await ProfileUpdateService(formData);
@@ -97,6 +102,8 @@ export const PersonalInformation = () => {
         }
     }
 
+    const { theme } = useTheme();
+
     const cancelProcess = () => {
         setFormData({
             fullname: user?.fullname || '',
@@ -114,7 +121,7 @@ export const PersonalInformation = () => {
 
     return (
         <>
-            <div className={`${ContainerCss.container} mb-5 pb-5`}>
+            <div className={`${theme === 'dark' ? ContainerCss['dark-container'] : ContainerCss['container']} mb-5 pb-5`}>
                 {/* title */}
                 <div style={{ fontFamily: 'sans-serif', fontSize: '14px' }} className='fw-bold'>
                     <p className='m-0'>Personal Information</p>
@@ -150,7 +157,7 @@ export const PersonalInformation = () => {
                                 <div className="form-group">
                                     <Label htmlFor={'phone'} required title='Phone Number'></Label>
                                     <div className="input-group">
-                                        <select name="country_code" id="" value={formData.country_code || ''} onChange={handleInput} className='border-secondary text-dark rounded-start' style={{ fontFamily: 'sans-serif', fontSize: '14px' }}>
+                                        <select name="country_code" id="" value={formData.country_code || ''} onChange={handleInput} className={`border-0 text-${theme === 'dark' ? 'secondary' : 'dark'} rounded-start`} style={{ fontFamily: 'sans-serif', fontSize: '14px' }}>
                                             <option value={formData.country_code || null}>+ {formData.country_code || '000'}</option>
                                             {allCountries.map((country: any) => (
                                                 <option key={country.iso2} value={country.dialCode}>

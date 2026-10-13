@@ -4,6 +4,7 @@ import Logo from '../../assets/images/logo/logo-dark.png';
 import ScrollFadeIn from "../ui/FadeIn";
 import { GoogleButton } from "../ui/GoogleSignIn";
 import { toast } from "sonner";
+import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 
 export const AccountLayout = () => {
     const navigate = useNavigate();
@@ -17,11 +18,39 @@ export const AccountLayout = () => {
         { id: '3', title: 'Get Support', to: '/get-support' }
     ] 
 
-    const handleGoogleSignIn = () => {
-        toast.info('Google Sign-In is currently unavailable. Please try again later.', {
-            description: 'We are working to integrate Google Sign-In. Stay tuned for updates!',
-            id: 'google-sign-in-unavailable'
-        });
+    const handleGoogleSignIn = async(response: CredentialResponse) => {
+        const toasterId = toast.loading('Processing...', {id: 'loading'});
+        const idToken = response.credential;
+        if (!idToken) {
+            return toast.error('Invalid request', {id: toasterId});
+        }
+
+        try {
+            const response = await fetch(`${import.meta.env.VITE_APP_CONTROLLER}auth/google`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    token: idToken
+                })
+            })
+
+            const request = await response.json();
+            if (!request.success || !response.ok) {
+                toast.error(request.message || 'Something went wrong', {id: toasterId});
+                return;
+            }
+
+            toast.success('Login successful', {id: toasterId});
+            navigate('/client/dashboard');
+        }
+
+        catch (e) {
+            console.log(e);
+            toast.error('Connection error', {id: toasterId});
+        }
     }
     return (
         <>
@@ -71,7 +100,7 @@ export const AccountLayout = () => {
                         </div>
 
                         <div>
-                            <GoogleButton onClick={handleGoogleSignIn} />
+                            <GoogleLogin onSuccess={handleGoogleSignIn} />
                         </div>
 
                         <div className={styles.dividerContainer}>

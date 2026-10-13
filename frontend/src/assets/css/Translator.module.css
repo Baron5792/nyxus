@@ -65,9 +65,31 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-height: 100px;
     overflow-y: auto;
+    z-index: 1000; /* Ensure it appears above other content */
 }
 
-.dropdownList li {
+.dark-dropdownList {
+    position: absolute;
+    top: 100%; /* Position right below the button */
+    left: 0;
+    width: 200px;
+    background-color: var(--dark-background);
+    border: 1px solid #555;
+    border-top: none;
+    border-radius: 0 0 0px 0px;
+    list-style: none;
+    padding: 0;
+    font-size: 13px;
+    font-family: sans-serif;
+    margin: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 100px;
+    overflow-y: auto;
+    z-index: 1000; /* Ensure it appears above other content */
+    color: grey; /* Text color for dark mode */
+}
+
+.dropdownList li, .dark-dropdownList li {
     padding: 4px 5px;
     cursor: pointer;
     display: flex;
@@ -75,11 +97,11 @@
     transition: background-color 0.15s;
 }
 
-.dropdownList li:hover {
+.dropdownList li:hover, .dark-dropdownList li:hover {
     background-color: #e9e9e9;
 }
 
-.dropdownList .selected {
+.dropdownList .selected, .dark-dropdownList .selected {
     background-color: #007bff;
     color: white;
 }
